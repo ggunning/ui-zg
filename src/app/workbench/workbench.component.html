@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="sidebar">
+    <h3>Available Components</h3>
+    <div *ngFor="let comp of availableComponents" (click)="onComponentClick(comp)">
+      <span>{{ comp.name }}</span>
+    </div>
+    <h3>Actions</h3>
+    <div class="connector-option" (click)="startConnecting()">
+      <span>Connect</span>
+    </div>
+  </div>
+  <div class="workbench" #workbench>
+    <ng-container *ngFor="let comp of instantiatedComponents; trackBy: trackByFn">
+      <div *ngIf="comp.id" cdkDrag [cdkDragBoundary]="'.workbench'" [id]="comp.id" class="draggable-item" (cdkDragMoved)="onDragMoved($event, comp)" (cdkDragEnded)="onDragEnded($event, comp)" (click)="onElementClick(comp.id)">
+        <ng-container *ngComponentOutlet="comp.component; injector: getInjector(comp.id)"></ng-container>
+
+        <div class="glowing-dot top-dot"></div>
+        <div class="glowing-dot bottom-dot"></div>
+        <div class="glowing-dot left-dot"></div>
+        <div class="glowing-dot right-dot"></div>
+      </div>
+    </ng-container>
+  </div>
+</div>
